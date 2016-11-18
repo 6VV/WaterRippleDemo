@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/WaterRippleDemo">
+        <file>Resources/water.jpg</file>
+    </qresource>
+</RCC>

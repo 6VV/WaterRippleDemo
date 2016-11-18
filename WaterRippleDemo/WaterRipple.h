@@ -23,7 +23,7 @@ public:
 	~WaterRipple();
 
 
-	void SetWaveSource(float x, float y, int radius, int depth);	/*设置波源*/
+	void SetWaveSource(int x, int y, int radius, int depth);	/*设置波源*/
 	void MoveLine(int startX,int startY,int endX,int endY);
 
 	void Run();			//开始渲染
@@ -32,7 +32,7 @@ public:
 private:
 	void SetWaveSourcePower(int radius, int depth);		//设置波源大小
 	////void setPointPower(int x, int y, int depth);		//设置任一点波源大小
-	void SetWaveSourcePosition(float x, float y);	//设置波源
+	void SetWaveSourcePosition(int x, int y);	//设置波源
 
 	void SpreedRipple();		//水波扩散
 	void RenderRipple();		//水波渲染

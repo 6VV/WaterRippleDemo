@@ -39,7 +39,7 @@ WaterRipple::~WaterRipple(){
 	if (!this->m_nSourcePosition){delete[] m_nSourcePosition;}
 }
 
-void WaterRipple::SetWaveSource(float x, float y, int radius, int depth)
+void WaterRipple::SetWaveSource(int x, int y, int radius, int depth)
 {
 	SetWaveSourcePower(radius, depth);
 	SetWaveSourcePosition(x, y);
@@ -82,7 +82,7 @@ int* WaterRipple::NewPixels()
 inline
 void WaterRipple::SetWaveSourcePower(int radius, int depth){
 
-	this->m_nSourceRadius = radius/m_fScale;
+	this->m_nSourceRadius = static_cast<int>(radius/m_fScale);
 	this->m_nSourceDepth = depth;
 
 	InitSourcePower();
@@ -91,7 +91,7 @@ void WaterRipple::SetWaveSourcePower(int radius, int depth){
 void WaterRipple::InitSourcePower(){
 	
 	int value = m_nSourceRadius*m_nSourceRadius;
-	int diameter = m_nSourceRadius << 1+1;
+	int diameter = (m_nSourceRadius << 1)+1;
 	int rate = m_nSourceRadius/value ;	//波源能量分布
 
 	int size = diameter*diameter;
@@ -114,9 +114,9 @@ void WaterRipple::InitSourcePower(){
 }
 
 inline
-void WaterRipple::SetWaveSourcePosition(float x, float y){
-	int sourceX = x/m_fScale;
-	int sourceY = y/m_fScale;
+void WaterRipple::SetWaveSourcePosition(int x, int y){
+	int sourceX = static_cast<int>(x/m_fScale);
+	int sourceY = static_cast<int>(y / m_fScale);
 	// 判断坐标是否在屏幕范围内
 	if ((sourceX + m_nSourceRadius) >= m_nWidth || (sourceY + m_nSourceRadius) >= m_nHeight
 		|| (sourceX - m_nSourceRadius) <= 0 || (sourceY - m_nSourceRadius) <= 0) {
@@ -126,9 +126,9 @@ void WaterRipple::SetWaveSourcePosition(float x, float y){
 
 	//设置波源
 	int distance = (sourceY - m_nSourceRadius)*m_nWidth + sourceX - m_nSourceRadius;
-	int size = (m_nSourceRadius << 1 + 1)* (m_nSourceRadius << 1 + 1);
+	int size = ((m_nSourceRadius << 1) + 1)* ((m_nSourceRadius << 1) + 1);
 	for (int i = 0; i < size; ++i){
-		m_pBuf1[distance+m_nSourcePosition[i]] = m_pSourcePower[i];
+		m_pBuf1[distance + m_nSourcePosition[i]] = static_cast<short>(m_pSourcePower[i]);
 	}
 }
 
